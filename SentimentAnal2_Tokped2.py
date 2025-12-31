@@ -7,7 +7,7 @@ file_path = 'tokopedia_products_with_review.csv'
 print(f"Memuat data {file_path}...")
 df = pd.read_csv(file_path)
 
-# 2. Parsing & Explode (Sama seperti sebelumnya)
+# 2. Parsing & Explode 
 def parse_list(x):
     try:
         return ast.literal_eval(x) if isinstance(x, str) else []
@@ -18,7 +18,7 @@ df['message'] = df['message'].apply(parse_list)
 df_exploded = df[['product_id', 'category', 'message']].explode('message').dropna(subset=['message'])
 
 # 3. Setup VADER Sentiment Analyzer
-# Kita tambahkan lexicon (kamus) Indonesia sederhana agar VADER lebih pintar
+# tambahkan lexicon (kamus) Indonesia sederhana agar VADER lebih pintar
 analyzer = SentimentIntensityAnalyzer()
 new_words = {
     'aman': 2.0, 'cepat': 1.5, 'puas': 2.0, 'original': 2.0, 'ori': 2.0,

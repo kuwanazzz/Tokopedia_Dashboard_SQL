@@ -2,10 +2,10 @@ import pandas as pd
 from sqlalchemy import create_engine
 import sys
 
-# 1. Alamat file CSV Anda
+# 1. Alamat file CSV 
 file_path = r'C:\Users\yameh\OneDrive\Desktop\dashboards\Dashboard_Tokopedia\tokopedia_products_with_review.csv'
 
-# 2. Detail Koneksi (Sudah menggunakan password Anda)
+# 2. Detail Koneksi (Sudah menggunakan password)
 username = 'postgres'
 password = 'NakayamaFesta1112'
 host = 'localhost'
@@ -29,17 +29,18 @@ try:
     engine = create_engine(conn_string)
 
     # 6. Mengirim ke Database
-    # Nama tabel di pgAdmin nanti adalah 'spotify_clean'
-    print("3. Mengirim data ke tabel 'spotify_clean'...")
-    df.to_sql('spotify_clean', engine, if_exists='replace', index=False)
+    # Nama tabel di pgAdmin nanti adalah "tokopedia_raw"
+    print("3. Mengirim data ke tabel 'tokopedia_raw'...")
+    df.to_sql('tokopedia_raw', engine, if_exists='replace', index=False)
 
     print("\n" + "="*30)
     print("HASIL: BERHASIL TOTAL!")
     print("="*30)
     print("Silakan cek pgAdmin Anda:")
     print(f"Database: {database_name}")
-    print("Table: spotify_clean")
+    print("Table: tokopedia_raw")
     print("\nData sekarang sudah siap ditarik ke Tableau.")
 
 except Exception as e:
     print(f"\nTerjadi kesalahan: {e}")
+

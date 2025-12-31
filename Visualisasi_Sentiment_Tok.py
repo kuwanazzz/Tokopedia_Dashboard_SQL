@@ -50,6 +50,6 @@ plt.title('Top Negative Keywords (Pain Points)', fontsize=16, fontweight='bold',
 plt.tight_layout()
 plt.show()
 
-# Simpan hasil visualisasi sebagai gambar untuk portofolio
+
 fig.savefig('tokopedia_sentiment_dashboard.png', dpi=300)
 print("Dashboard berhasil disimpan sebagai 'tokopedia_sentiment_dashboard.png'")
