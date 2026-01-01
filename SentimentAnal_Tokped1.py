@@ -1,14 +1,12 @@
 import pandas as pd
 import ast
 
-# 1. Load Data
+
 
 print("Sedang memuat data...")
 df = pd.read_csv('tokopedia_products_with_review.csv')
 
-# 2. Parsing Kolom List
-# Karena di CSV kolom 'message' dan 'review_rating' terbaca sebagai string "[...]", 
-# ubah balik jadi list Python beneran.
+
 def parse_list(x):
     try:
         return ast.literal_eval(x) if isinstance(x, str) else []
@@ -19,19 +17,17 @@ print("Parsing data review (ini mungkin agak lama karena 1jt+ data)...")
 df['message'] = df['message'].apply(parse_list)
 df['review_rating'] = df['review_rating'].apply(parse_list)
 
-# 3. Explode Data
-#  pecah list review agar setiap review punya barisnya sendiri (long format)
+
 print("Transforming data ke format long...")
 df_exploded = df[['product_id', 'category', 'message', 'review_rating']].explode(['message', 'review_rating'])
 
-# Hapus data yang tidak punya review
+
 df_exploded = df_exploded.dropna(subset=['message'])
 
-# 4. Sentiment Analysis Sederhana (Lexicon-Based)
 def analyze_sentiment(text):
     text = str(text).lower()
     
-    # Kamus sederhana bahasa Indonesia
+
     pos_words = {'bagus', 'mantap', 'puas', 'cepat', 'original', 'ori', 'rapi', 'sesuai', 'recomended', 'aman'}
     neg_words = {'kecewa', 'jelek', 'rusak', 'palsu', 'lama', 'lambat', 'kurang', 'pecah', 'penipu', 'lelet'}
     
@@ -49,8 +45,7 @@ def analyze_sentiment(text):
 print("Menganalisis sentimen...")
 df_exploded['sentiment'] = df_exploded['message'].apply(analyze_sentiment)
 
-# 5. Export Hasil
-#  simpan hasil akhir untuk ditarik ke Tableau
+
 print("Menyimpan hasil ke CSV...")
 df_exploded.to_csv('tokopedia_sentiment_results.csv', index=False)
 print("Selesai! File 'tokopedia_sentiment_results.csv' siap digunakan.")
